@@ -40,7 +40,7 @@ def go(config: DictConfig):
             _ = mlflow.run(
                 f"{config['main']['components_repository']}/get_data",
                 "main",
-                version='main',
+                version=config['main']['branch_name'],
                 parameters={
                     "sample": config["etl"]["sample"],
                     "artifact_name": "sample.csv",
@@ -48,7 +48,7 @@ def go(config: DictConfig):
                     "artifact_description": "Raw file as downloaded"
                 },
                 env_manager="local",
-                
+
             )
 
         if "basic_cleaning" in active_steps:
