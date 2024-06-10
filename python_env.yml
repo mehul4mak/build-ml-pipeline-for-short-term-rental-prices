@@ -1,5 +1,5 @@
 name: components
-python: "3.8.15"
+python: "3.10"
 # Dependencies required to build packages. This field is optional.
 build_dependencies:
   - pip

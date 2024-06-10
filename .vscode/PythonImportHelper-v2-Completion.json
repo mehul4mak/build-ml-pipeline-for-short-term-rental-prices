@@ -36,30 +36,6 @@
         "documentation": {}
     },
     {
-        "label": "log_artifact",
-        "importPath": "wandb_utils.log_artifact",
-        "description": "wandb_utils.log_artifact",
-        "isExtraImport": true,
-        "detail": "wandb_utils.log_artifact",
-        "documentation": {}
-    },
-    {
-        "label": "log_artifact",
-        "importPath": "wandb_utils.log_artifact",
-        "description": "wandb_utils.log_artifact",
-        "isExtraImport": true,
-        "detail": "wandb_utils.log_artifact",
-        "documentation": {}
-    },
-    {
-        "label": "log_artifact",
-        "importPath": "wandb_utils.log_artifact",
-        "description": "wandb_utils.log_artifact",
-        "isExtraImport": true,
-        "detail": "wandb_utils.log_artifact",
-        "documentation": {}
-    },
-    {
         "label": "mlflow",
         "kind": 6,
         "isExtraImport": true,
@@ -91,6 +67,22 @@
         "description": "sklearn.metrics",
         "isExtraImport": true,
         "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "log_artifact",
+        "importPath": "wandb_utils.log_artifact",
+        "description": "wandb_utils.log_artifact",
+        "isExtraImport": true,
+        "detail": "wandb_utils.log_artifact",
+        "documentation": {}
+    },
+    {
+        "label": "log_artifact",
+        "importPath": "wandb_utils.log_artifact",
+        "description": "wandb_utils.log_artifact",
+        "isExtraImport": true,
+        "detail": "wandb_utils.log_artifact",
         "documentation": {}
     },
     {
@@ -274,7 +266,7 @@
         "kind": 2,
         "importPath": "components.get_data.run",
         "description": "components.get_data.run",
-        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,\n        os.path.join(\"data\", args.sample),",
+        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    wandb.log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,\n        os.path.join(\"data\", args.sample),",
         "detail": "components.get_data.run",
         "documentation": {}
     },
@@ -283,7 +275,7 @@
         "kind": 5,
         "importPath": "components.get_data.run",
         "description": "components.get_data.run",
-        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    wandb.log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,",
         "detail": "components.get_data.run",
         "documentation": {}
     },

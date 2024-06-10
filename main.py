@@ -47,6 +47,8 @@ def go(config: DictConfig):
                     "artifact_type": "raw_data",
                     "artifact_description": "Raw file as downloaded"
                 },
+                env_manager="local",
+                
             )
 
         if "basic_cleaning" in active_steps:
