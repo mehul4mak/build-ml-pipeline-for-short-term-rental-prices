@@ -383,6 +383,24 @@
         "documentation": {}
     },
     {
+        "label": "go",
+        "kind": 2,
+        "importPath": "src.basic_cleaning.run",
+        "description": "src.basic_cleaning.run",
+        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"basic_cleaning\")\n    run.config.update(args)\n    # Download input artifact. This will also log that this script is using this\n    # particular version of the artifact\n    # artifact_local_path = run.use_artifact(args.input_artifact).file()\n    ######################\n    # YOUR CODE HERE     #\n    ######################\nif __name__ == \"__main__\":",
+        "detail": "src.basic_cleaning.run",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "src.basic_cleaning.run",
+        "description": "src.basic_cleaning.run",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"basic_cleaning\")\n    run.config.update(args)\n    # Download input artifact. This will also log that this script is using this\n    # particular version of the artifact\n    # artifact_local_path = run.use_artifact(args.input_artifact).file()\n    ######################\n    # YOUR CODE HERE     #\n    ######################",
+        "detail": "src.basic_cleaning.run",
+        "documentation": {}
+    },
+    {
         "label": "pytest_addoption",
         "kind": 2,
         "importPath": "src.data_check.conftest",
