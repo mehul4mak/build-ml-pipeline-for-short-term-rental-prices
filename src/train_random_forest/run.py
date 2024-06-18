@@ -126,18 +126,19 @@ def go(args):
             input_example=X_val.iloc[:2],
         )
 
-        # artifact = wandb.Artifact(
-        #     args.output_artifact,
-        #     type="model_export",
-        #     description="Random Forest pipeline export",
-        #     # metadata=rf_config
-        # )
-        # artifact.add_dir(export_path)
+        artifact = wandb.Artifact(
+            args.output_artifact,
+            type="model_export",
+            description="Random Forest pipeline export",
+            # metadata=rf_config
+        )
+        artifact.add_dir(export_path)
 
-        # run.log_artifact(artifact)
+        run.log_artifact(artifact)
 
         # Make sure the artifact is uploaded before the temp dir
         # gets deleted
+        artifact.wait()
 
     # Plot feature importance
     fig_feat_imp = plot_feature_importance(sk_pipe, processed_features)
