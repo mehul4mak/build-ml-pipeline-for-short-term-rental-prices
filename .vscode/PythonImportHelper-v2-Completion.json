@@ -414,7 +414,7 @@
         "kind": 2,
         "importPath": "components.data_check.test_data",
         "description": "components.data_check.test_data",
-        "peekOfCode": "def test_price_range(data: pd.DataFrame, min_price: float, max_price: float):\n    \"\"\"test_price_range\n    Args:\n        data (pd.DataFrame): input dataframe\n        min_price (float): minimum price value \n        max_price (float): maximum price value\n    \"\"\"\n    assert data['price'].between(min_price, max_price)",
+        "peekOfCode": "def test_price_range(data: pd.DataFrame, min_price: float, max_price: float):\n    \"\"\"test_price_range\n    Args:\n        data (pd.DataFrame): input dataframe\n        min_price (float): minimum price value \n        max_price (float): maximum price value\n    \"\"\"\n    assert data['price'].between(min_price, max_price).all()",
         "detail": "components.data_check.test_data",
         "documentation": {}
     },
