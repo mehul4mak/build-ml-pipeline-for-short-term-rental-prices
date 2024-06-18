@@ -1,5 +1,50 @@
 [
     {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "wandb",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "wandb",
+        "description": "wandb",
+        "detail": "wandb",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "scipy.stats",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy.stats",
+        "description": "scipy.stats",
+        "detail": "scipy.stats",
+        "documentation": {}
+    },
+    {
         "label": "argparse",
         "kind": 6,
         "isExtraImport": true,
@@ -24,15 +69,6 @@
         "importPath": "os",
         "description": "os",
         "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "wandb",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "wandb",
-        "description": "wandb",
-        "detail": "wandb",
         "documentation": {}
     },
     {
@@ -66,15 +102,6 @@
         "importPath": "mlflow",
         "description": "mlflow",
         "detail": "mlflow",
-        "documentation": {}
-    },
-    {
-        "label": "pandas",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pandas",
-        "description": "pandas",
-        "detail": "pandas",
         "documentation": {}
     },
     {
@@ -124,33 +151,6 @@
         "description": "setuptools",
         "isExtraImport": true,
         "detail": "setuptools",
-        "documentation": {}
-    },
-    {
-        "label": "pytest",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pytest",
-        "description": "pytest",
-        "detail": "pytest",
-        "documentation": {}
-    },
-    {
-        "label": "numpy",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
-        "documentation": {}
-    },
-    {
-        "label": "scipy.stats",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "scipy.stats",
-        "description": "scipy.stats",
-        "detail": "scipy.stats",
         "documentation": {}
     },
     {
@@ -311,6 +311,114 @@
         "documentation": {}
     },
     {
+        "label": "pytest_addoption",
+        "kind": 2,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "def pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "kind": 2,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "def data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.csv).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --csv option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "ref_data",
+        "kind": 2,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "def ref_data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.ref).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --ref option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "kl_threshold",
+        "kind": 2,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "def kl_threshold(request):\n    kl_threshold = request.config.option.kl_threshold\n    if kl_threshold is None:\n        pytest.fail(\"You must provide a threshold for the KL test\")\n    return float(kl_threshold)\n@pytest.fixture(scope='session')\ndef min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "min_price",
+        "kind": 2,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "def min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")\n    return float(min_price)\n@pytest.fixture(scope='session')\ndef max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "max_price",
+        "kind": 2,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "def max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")\n    return float(max_price)",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "test_column_names",
+        "kind": 2,
+        "importPath": "components.data_check.test_data",
+        "description": "components.data_check.test_data",
+        "peekOfCode": "def test_column_names(data):\n    expected_colums = [\n        \"id\",\n        \"name\",\n        \"host_id\",\n        \"host_name\",\n        \"neighbourhood_group\",\n        \"neighbourhood\",\n        \"latitude\",\n        \"longitude\",",
+        "detail": "components.data_check.test_data",
+        "documentation": {}
+    },
+    {
+        "label": "test_neighborhood_names",
+        "kind": 2,
+        "importPath": "components.data_check.test_data",
+        "description": "components.data_check.test_data",
+        "peekOfCode": "def test_neighborhood_names(data):\n    known_names = [\"Bronx\", \"Brooklyn\", \"Manhattan\", \"Queens\", \"Staten Island\"]\n    neigh = set(data['neighbourhood_group'].unique())\n    # Unordered check\n    assert set(known_names) == set(neigh)\ndef test_proper_boundaries(data: pd.DataFrame):\n    \"\"\"\n    Test proper longitude and latitude boundaries for properties in and around NYC\n    \"\"\"\n    idx = data['longitude'].between(-74.25, - \\",
+        "detail": "components.data_check.test_data",
+        "documentation": {}
+    },
+    {
+        "label": "test_proper_boundaries",
+        "kind": 2,
+        "importPath": "components.data_check.test_data",
+        "description": "components.data_check.test_data",
+        "peekOfCode": "def test_proper_boundaries(data: pd.DataFrame):\n    \"\"\"\n    Test proper longitude and latitude boundaries for properties in and around NYC\n    \"\"\"\n    idx = data['longitude'].between(-74.25, - \\\n                                    73.50) & data['latitude'].between(40.5, 41.2)\n    assert np.sum(~idx) == 0\ndef test_similar_neigh_distrib(\n        data: pd.DataFrame,\n        ref_data: pd.DataFrame,",
+        "detail": "components.data_check.test_data",
+        "documentation": {}
+    },
+    {
+        "label": "test_similar_neigh_distrib",
+        "kind": 2,
+        "importPath": "components.data_check.test_data",
+        "description": "components.data_check.test_data",
+        "peekOfCode": "def test_similar_neigh_distrib(\n        data: pd.DataFrame,\n        ref_data: pd.DataFrame,\n        kl_threshold: float):\n    \"\"\"\n    Apply a threshold on the KL divergence to detect if the distribution of the new data is\n    significantly different than that of the reference dataset\n    \"\"\"\n    dist1 = data['neighbourhood_group'].value_counts().sort_index()\n    dist2 = ref_data['neighbourhood_group'].value_counts().sort_index()",
+        "detail": "components.data_check.test_data",
+        "documentation": {}
+    },
+    {
+        "label": "test_row_count",
+        "kind": 2,
+        "importPath": "components.data_check.test_data",
+        "description": "components.data_check.test_data",
+        "peekOfCode": "def test_row_count(data: pd.DataFrame) -> None:\n    \"\"\"test_row_count in given range for input dataframe\n    Args:\n        data (pd.DataFrame): input dataframe\n    \"\"\"\n    assert 15000 < data.shape[0] < 1000000\ndef test_price_range(data: pd.DataFrame, min_price: float, max_price: float):\n    \"\"\"test_price_range\n    Args:\n        data (pd.DataFrame): input dataframe",
+        "detail": "components.data_check.test_data",
+        "documentation": {}
+    },
+    {
+        "label": "test_price_range",
+        "kind": 2,
+        "importPath": "components.data_check.test_data",
+        "description": "components.data_check.test_data",
+        "peekOfCode": "def test_price_range(data: pd.DataFrame, min_price: float, max_price: float):\n    \"\"\"test_price_range\n    Args:\n        data (pd.DataFrame): input dataframe\n        min_price (float): minimum price value \n        max_price (float): maximum price value\n    \"\"\"\n    assert data['price'].between(min_price, max_price)",
+        "detail": "components.data_check.test_data",
+        "documentation": {}
+    },
+    {
         "label": "go",
         "kind": 2,
         "importPath": "components.get_data.run",
@@ -398,96 +506,6 @@
         "description": "src.basic_cleaning.run",
         "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    with wandb.init(job_type=\"basic_cleaning\") as run:\n        logger.info(\"Creating wandb run...\")\n        run.config.update(args)\n        logger.info(\"Downloading raw artifact\")\n        # run = wandb.init(project=\"nyc_airbnb\", group=\"eda\", save_code=True)\n        artifact_local_path = run.use_artifact(args.input_artifact).file()\n        df = pd.read_csv(artifact_local_path)\n        logger.info(\"Creating cleaned artifact\")",
         "detail": "src.basic_cleaning.run",
-        "documentation": {}
-    },
-    {
-        "label": "pytest_addoption",
-        "kind": 2,
-        "importPath": "src.data_check.conftest",
-        "description": "src.data_check.conftest",
-        "peekOfCode": "def pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this",
-        "detail": "src.data_check.conftest",
-        "documentation": {}
-    },
-    {
-        "label": "data",
-        "kind": 2,
-        "importPath": "src.data_check.conftest",
-        "description": "src.data_check.conftest",
-        "peekOfCode": "def data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.csv).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --csv option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
-        "detail": "src.data_check.conftest",
-        "documentation": {}
-    },
-    {
-        "label": "ref_data",
-        "kind": 2,
-        "importPath": "src.data_check.conftest",
-        "description": "src.data_check.conftest",
-        "peekOfCode": "def ref_data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.ref).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --ref option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
-        "detail": "src.data_check.conftest",
-        "documentation": {}
-    },
-    {
-        "label": "kl_threshold",
-        "kind": 2,
-        "importPath": "src.data_check.conftest",
-        "description": "src.data_check.conftest",
-        "peekOfCode": "def kl_threshold(request):\n    kl_threshold = request.config.option.kl_threshold\n    if kl_threshold is None:\n        pytest.fail(\"You must provide a threshold for the KL test\")\n    return float(kl_threshold)\n@pytest.fixture(scope='session')\ndef min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")",
-        "detail": "src.data_check.conftest",
-        "documentation": {}
-    },
-    {
-        "label": "min_price",
-        "kind": 2,
-        "importPath": "src.data_check.conftest",
-        "description": "src.data_check.conftest",
-        "peekOfCode": "def min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")\n    return float(min_price)\n@pytest.fixture(scope='session')\ndef max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")",
-        "detail": "src.data_check.conftest",
-        "documentation": {}
-    },
-    {
-        "label": "max_price",
-        "kind": 2,
-        "importPath": "src.data_check.conftest",
-        "description": "src.data_check.conftest",
-        "peekOfCode": "def max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")\n    return float(max_price)",
-        "detail": "src.data_check.conftest",
-        "documentation": {}
-    },
-    {
-        "label": "test_column_names",
-        "kind": 2,
-        "importPath": "src.data_check.test_data",
-        "description": "src.data_check.test_data",
-        "peekOfCode": "def test_column_names(data):\n    expected_colums = [\n        \"id\",\n        \"name\",\n        \"host_id\",\n        \"host_name\",\n        \"neighbourhood_group\",\n        \"neighbourhood\",\n        \"latitude\",\n        \"longitude\",",
-        "detail": "src.data_check.test_data",
-        "documentation": {}
-    },
-    {
-        "label": "test_neighborhood_names",
-        "kind": 2,
-        "importPath": "src.data_check.test_data",
-        "description": "src.data_check.test_data",
-        "peekOfCode": "def test_neighborhood_names(data):\n    known_names = [\"Bronx\", \"Brooklyn\", \"Manhattan\", \"Queens\", \"Staten Island\"]\n    neigh = set(data['neighbourhood_group'].unique())\n    # Unordered check\n    assert set(known_names) == set(neigh)\ndef test_proper_boundaries(data: pd.DataFrame):\n    \"\"\"\n    Test proper longitude and latitude boundaries for properties in and around NYC\n    \"\"\"\n    idx = data['longitude'].between(-74.25, - \\",
-        "detail": "src.data_check.test_data",
-        "documentation": {}
-    },
-    {
-        "label": "test_proper_boundaries",
-        "kind": 2,
-        "importPath": "src.data_check.test_data",
-        "description": "src.data_check.test_data",
-        "peekOfCode": "def test_proper_boundaries(data: pd.DataFrame):\n    \"\"\"\n    Test proper longitude and latitude boundaries for properties in and around NYC\n    \"\"\"\n    idx = data['longitude'].between(-74.25, - \\\n                                    73.50) & data['latitude'].between(40.5, 41.2)\n    assert np.sum(~idx) == 0\ndef test_similar_neigh_distrib(\n        data: pd.DataFrame,\n        ref_data: pd.DataFrame,",
-        "detail": "src.data_check.test_data",
-        "documentation": {}
-    },
-    {
-        "label": "test_similar_neigh_distrib",
-        "kind": 2,
-        "importPath": "src.data_check.test_data",
-        "description": "src.data_check.test_data",
-        "peekOfCode": "def test_similar_neigh_distrib(\n        data: pd.DataFrame,\n        ref_data: pd.DataFrame,\n        kl_threshold: float):\n    \"\"\"\n    Apply a threshold on the KL divergence to detect if the distribution of the new data is\n    significantly different than that of the reference dataset\n    \"\"\"\n    dist1 = data['neighbourhood_group'].value_counts().sort_index()\n    dist2 = ref_data['neighbourhood_group'].value_counts().sort_index()",
-        "detail": "src.data_check.test_data",
         "documentation": {}
     },
     {

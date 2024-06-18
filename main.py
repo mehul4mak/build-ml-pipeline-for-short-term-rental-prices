@@ -51,11 +51,6 @@ def go(config: DictConfig):
 
             )
 
-        if "basic_cleaning" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
 
         if "basic_cleaning" in active_steps:
             _ = mlflow.run(
@@ -73,10 +68,19 @@ def go(config: DictConfig):
             )
 
         if "data_check" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/data_check",
+                "main",
+                parameters={
+                    "csv": "clean_sample.csv:latest",
+                    "ref": "clean_sample.csv:ref",
+                    "kl_threshold": config["data_check"]["kl_threshold"],
+                    "min_price": config['etl']['min_price'],
+                    "max_price": config['etl']['max_price']
+                    },
+                env_manager="local"
+                )
+
 
         if "data_split" in active_steps:
             ##################
