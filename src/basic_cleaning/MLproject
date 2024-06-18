@@ -1,5 +1,6 @@
 name: basic_cleaning
-conda_env: conda.yml
+# conda_env: conda.yml
+python_env: python_env.yml
 
 entry_points:
   main:
@@ -23,11 +24,11 @@ entry_points:
 
       min_price:
         description: ## ADD DESCRIPTION
-        type: string
+        type: float
 
       max_price:
         description: ## ADD DESCRIPTION
-        type: string
+        type: float
 
 
     command: >-
