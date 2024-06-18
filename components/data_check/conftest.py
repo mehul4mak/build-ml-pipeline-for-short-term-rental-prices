@@ -4,6 +4,7 @@ import wandb
 
 run = wandb.init(job_type="data_tests")
 
+run = wandb.init(job_type="data_tests")
 
 def pytest_addoption(parser):
     parser.addoption("--csv", action="store")

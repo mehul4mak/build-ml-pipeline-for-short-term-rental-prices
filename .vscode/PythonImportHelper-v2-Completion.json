@@ -369,6 +369,15 @@
         "kind": 5,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
+        "peekOfCode": "run = wandb.init(job_type=\"data_tests\")\nrun = wandb.init(job_type=\"data_tests\")\ndef pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "run",
+        "kind": 5,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
         "peekOfCode": "run = wandb.init(job_type=\"data_tests\")\ndef pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    run = wandb.init(job_type=\"data_tests\",resume=True)",
         "detail": "components.data_check.conftest",
         "documentation": {}
