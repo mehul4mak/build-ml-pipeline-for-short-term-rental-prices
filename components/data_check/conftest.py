@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 import wandb
 
+run = wandb.init(job_type="data_tests")
 
 def pytest_addoption(parser):
     parser.addoption("--csv", action="store")
@@ -13,8 +14,8 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope='session')
 def data(request):
-    run = wandb.init(job_type="data_tests")
-
+    
+    run = wandb.init(job_type="data_tests",resume=True)
     # Download input artifact. This will also note that this script is using this
     # particular version of the artifact
     data_path = run.use_artifact(request.config.option.csv).file()
@@ -29,7 +30,7 @@ def data(request):
 
 @pytest.fixture(scope='session')
 def ref_data(request):
-    run = wandb.init(job_type="data_tests")
+    run = wandb.init(job_type="data_tests",resume=True)
 
     # Download input artifact. This will also note that this script is using this
     # particular version of the artifact

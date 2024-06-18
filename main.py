@@ -82,7 +82,6 @@ def go(config: DictConfig):
                 env_manager="local"
                 )
 
-
         if "data_split" in active_steps:
             ##################
             # Implement here #
