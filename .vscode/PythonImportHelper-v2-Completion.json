@@ -554,15 +554,6 @@
         "documentation": {}
     },
     {
-        "label": "export_model",
-        "kind": 2,
-        "importPath": "src.train_random_forest.run",
-        "description": "src.train_random_forest.run",
-        "peekOfCode": "def export_model(run, pipe, X_val, val_pred, export_artifact,rf_config):\n    # Infer the signature of the model\n    signature = mlflow.models.infer_signature(X_val, val_pred)\n    with tempfile.TemporaryDirectory() as temp_dir:\n        export_path = os.path.join(temp_dir, \"model_export\")\n        mlflow.sklearn.save_model(\n            pipe,\n            export_path,\n            serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,\n            signature=signature,",
-        "detail": "src.train_random_forest.run",
-        "documentation": {}
-    },
-    {
         "label": "logger",
         "kind": 5,
         "importPath": "src.train_random_forest.run",

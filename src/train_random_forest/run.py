@@ -102,19 +102,47 @@ def go(args):
     ######################################
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
     # HINT: use mlflow.sklearn.save_model
-   
+    # ######################################
+    # # Upload the model we just exported to W&B
+    # # HINT: use wandb.Artifact to create an artifact. Use args.output_artifact as artifact name, "model_export" as
+    # # type, provide a description and add rf_config as metadata. Then, use the .add_dir method of the artifact instance
+    # # you just created to add the "random_forest_dir" directory to the artifact, and finally use
+    # # run.log_artifact to log the artifact to the run
+    object_cols = X_val.select_dtypes(include='O').columns.tolist()
+    X_val[object_cols] = X_val[object_cols].astype(str)
+    signature = mlflow.models.infer_signature(X_val, y_val)
 
-    ######################################
-    # Upload the model we just exported to W&B
-    # HINT: use wandb.Artifact to create an artifact. Use args.output_artifact as artifact name, "model_export" as
-    # type, provide a description and add rf_config as metadata. Then, use the .add_dir method of the artifact instance
-    # you just created to add the "random_forest_dir" directory to the artifact, and finally use
-    # run.log_artifact to log the artifact to the run
+    with tempfile.TemporaryDirectory() as temp_dir:
+       
+        export_path = os.path.join(temp_dir, "model_export")
 
-    export_model(run, sk_pipe, X_val, y_pred, args.output_artifact, rf_config)
+        logger.info(f"saving model...")
+
+        mlflow.sklearn.save_model(
+            sk_pipe,
+            export_path,
+            serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
+            signature=signature,
+            input_example=X_val.iloc[:2],
+        )
+
+        # artifact = wandb.Artifact(
+        #     args.output_artifact,
+        #     type="model_export",
+        #     description="Random Forest pipeline export",
+        #     # metadata=rf_config
+        # )
+        # artifact.add_dir(export_path)
+
+        # run.log_artifact(artifact)
+
+        # Make sure the artifact is uploaded before the temp dir
+        # gets deleted
 
     # Plot feature importance
     fig_feat_imp = plot_feature_importance(sk_pipe, processed_features)
+
+
 
     ######################################
     # Here we save r_squared under the "r2" key
@@ -242,44 +270,11 @@ def get_inference_pipeline(rf_config, max_tfidf_features):
     sk_pipe = Pipeline(
         steps=[
             ("preprocessor", preprocessor),
-            ("classifier", random_Forest),
+            ("random_forest", random_Forest),
         ]
     )
 
     return sk_pipe, processed_features
-
-
-def export_model(run, pipe, X_val, val_pred, export_artifact,rf_config):
-
-    # Infer the signature of the model
-    
-    signature = mlflow.models.infer_signature(X_val, val_pred)
-
-    with tempfile.TemporaryDirectory() as temp_dir:
-
-        export_path = os.path.join(temp_dir, "model_export")
-
-        mlflow.sklearn.save_model(
-            pipe,
-            export_path,
-            serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
-            signature=signature,
-            input_example=X_val.iloc[:2],
-        )
-
-        artifact = wandb.Artifact(
-            export_artifact,
-            type="model_export",
-            description="Random Forest pipeline export",
-            metadata=rf_config
-        )
-        artifact.add_dir(export_path)
-
-        run.log_artifact(artifact)
-
-        # Make sure the artifact is uploaded before the temp dir
-        # gets deleted
-        artifact.wait()
 
 
 if __name__ == "__main__":
