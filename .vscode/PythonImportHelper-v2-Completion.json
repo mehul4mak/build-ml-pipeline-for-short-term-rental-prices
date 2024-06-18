@@ -315,7 +315,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    run = wandb.init(job_type=\"data_tests\")\n    # Download input artifact. This will also note that this script is using this",
+        "peekOfCode": "def pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    # run = wandb.init(job_type=\"data_tests\")\n    # Download input artifact. This will also note that this script is using this",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -324,7 +324,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def data(request):\n    run = wandb.init(job_type=\"data_tests\")\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.csv).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --csv option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
+        "peekOfCode": "def data(request):\n    # run = wandb.init(job_type=\"data_tests\")\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.csv).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --csv option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -333,7 +333,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def ref_data(request):\n    run = wandb.init(job_type=\"data_tests\")\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.ref).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --ref option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
+        "peekOfCode": "def ref_data(request):\n    # run = wandb.init(job_type=\"data_tests\")\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.ref).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --ref option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -361,6 +361,15 @@
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
         "peekOfCode": "def max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")\n    return float(max_price)",
+        "detail": "components.data_check.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "run",
+        "kind": 5,
+        "importPath": "components.data_check.conftest",
+        "description": "components.data_check.conftest",
+        "peekOfCode": "run = wandb.init(job_type=\"data_tests\")\ndef pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    # run = wandb.init(job_type=\"data_tests\")",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },

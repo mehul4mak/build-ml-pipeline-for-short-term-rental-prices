@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import scipy.stats
 
+
 def test_column_names(data):
 
     expected_colums = [
