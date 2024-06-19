@@ -551,8 +551,8 @@ train the model on a new sample of data that our company received (``sample2.csv
 
 (be ready for a surprise, keep reading even if the command fails)
 ```bash
-> mlflow run https://github.com/[your github username]/build-ml-pipeline-for-short-term-rental-prices.git \
-             -v [the version you want to use, like 1.0.0] \
+> mlflow run https://github.com/mehul4mak/build-ml-pipeline-for-short-term-rental-prices.git \
+             -v 1.0.2 \
              -P hydra_options="etl.sample='sample2.csv'" --env-manger=local
 ```
 
@@ -573,7 +573,7 @@ df = df[idx].copy()
 This will drop rows in the dataset that are not in the proper geolocation. 
 
 Then commit your change, make a new release (for example ``1.0.1``) and retry (of course you need to use 
-``-v 1.0.1`` when calling mlflow this time). Now the run should succeed and voit la', 
+``-v 1.0.2`` when calling mlflow this time). Now the run should succeed and voit la', 
 you have trained your new model on the new data.
 
 ## License
