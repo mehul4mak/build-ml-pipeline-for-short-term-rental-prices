@@ -38,7 +38,7 @@ and click on `Fork` in the upper right corner. This will create a fork in your G
 repository that is under your control. Now clone the repository locally so you can start working on it:
 
 ```
-git clone https://github.com/[your github username]/build-ml-pipeline-for-short-term-rental-prices.git
+git clone https://github.com/mehul4mak/build-ml-pipeline-for-short-term-rental-prices.git
 ```
 
 and go into the repository:
@@ -53,10 +53,17 @@ to add meaningful commit messages.
 Make sure to have conda installed and ready, then create a new environment using the ``environment.yml``
 file provided in the root of the repository and activate it:
 
+I am using venv because conda does not work on my system and I believe it is good opportunity to try venv 
+
+
+
 ```bash
-> conda env create -f environment.yml
-> conda activate nyc_airbnb_dev
+> python -m venv venv
+> source venv/bin/python
+> pip install -r requirements.txt
 ```
+
+
 
 ### Get API key for Weights and Biases
 Let's make sure we are logged in to Weights & Biases. Get your API key from W&B by going to 
@@ -134,12 +141,14 @@ When developing it is useful to be able to run one step at the time. Say you wan
 the ``download`` step. The `main.py` is written so that the steps are defined at the top of the file, in the 
 ``_steps`` list, and can be selected by using the `steps` parameter on the command line:
 
+**Since I am using venv there's one more argument need to be passed**
+
 ```bash
-> mlflow run . -P steps=download
+> mlflow run . -P steps=download --env-manger=local
 ```
 If you want to run the ``download`` and the ``basic_cleaning`` steps, you can similarly do:
 ```bash
-> mlflow run . -P steps=download,basic_cleaning
+> mlflow run . -P steps=download,basic_cleaning --env-manger=local
 ```
 You can override any other parameter in the configuration file using the Hydra syntax, by
 providing it as a ``hydra_options`` parameter. For example, say that we want to set the parameter
@@ -148,7 +157,7 @@ modeling -> random_forest -> n_estimators to 10 and etl->min_price to 50:
 ```bash
 > mlflow run . \
   -P steps=download,basic_cleaning \
-  -P hydra_options="modeling.random_forest.n_estimators=10 etl.min_price=50"
+  -P hydra_options="modeling.random_forest.n_estimators=10 etl.min_price=50" --env-manger=local
 ```
 
 ### Pre-existing components
@@ -166,6 +175,7 @@ _ = mlflow.run(
                     "artifact_type": "raw_data",
                     "artifact_description": "Raw file as downloaded"
                 },
+                env_manager="local",
             )
 ```
 where `config['main']['components_repository']` is set to 
@@ -219,7 +229,7 @@ notebook can be understood by other people like your colleagues
    get a sample of the data. The pipeline will also upload it to Weights & Biases:
    
   ```bash
-  > mlflow run . -P steps=download
+  > mlflow run . -P steps=download --env-manger=local
   ```
   
   You will see a message similar to:
@@ -231,7 +241,7 @@ notebook can be understood by other people like your colleagues
 
 2. Now execute the `eda` step:
    ```bash
-   > mlflow run src/eda
+   > mlflow run src/eda --env-manger=local
    ```
    This will install Jupyter and all the dependencies for `pandas-profiling`, and open a Jupyter notebook instance.
    Click on New -> Python 3 and create a new notebook. Rename it `EDA` by clicking on `Untitled` at the top, beside the
@@ -372,8 +382,9 @@ with the cleaned data:
                 "output_type": "clean_sample",
                 "output_description": "Data with outliers and null values removed",
                 "min_price": config['etl']['min_price'],
-                "max_price": config['etl']['max_price']
+                "max_price": config['etl']['max_price'],
             },
+            env_manager="local"
         )
    ```
 5. Run the pipeline. If you go to W&B, you will see the new artifact type `clean_sample` and within it the 
@@ -419,7 +430,7 @@ Then run the pipeline and make sure the tests are executed and that they pass. R
 step with:
 
 ```bash
-> mlflow run . -P steps="data_check"
+> mlflow run . -P steps="data_check" --env-manger=local
 ```
 
 You can safely ignore the following DeprecationWarning if you see it:
@@ -468,7 +479,7 @@ two other parameters (this is NOT the solution to this step):
 ```bash
 > mlflow run . \
   -P steps=train_random_forest \
-  -P hydra_options="modeling.random_forest.max_depth=10,50,100 modeling.random_forest.n_estimators=100,200,500 -m"
+  -P hydra_options="modeling.random_forest.max_depth=10,50,100 modeling.random_forest.n_estimators=100,200,500 -m" --env-manger=local
 ```
 you can change this command line to accomplish your task.
 
@@ -513,7 +524,7 @@ of promoting a model to ``prod`` before it can complete successfully. Therefore,
 activate it explicitly on the command line:
 
 ```bash
-> mlflow run . -P steps=test_regression_model
+> mlflow run . -P steps=test_regression_model --env-manger=local
 ```
 
 ### Visualize the pipeline
@@ -542,7 +553,7 @@ train the model on a new sample of data that our company received (``sample2.csv
 ```bash
 > mlflow run https://github.com/[your github username]/build-ml-pipeline-for-short-term-rental-prices.git \
              -v [the version you want to use, like 1.0.0] \
-             -P hydra_options="etl.sample='sample2.csv'"
+             -P hydra_options="etl.sample='sample2.csv'" --env-manger=local
 ```
 
 **_NOTE_**: the file ``sample2.csv`` contains more data than ``sample1.csv`` so the training will
