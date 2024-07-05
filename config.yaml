@@ -1,4 +1,5 @@
 main:
+  mlflow_env: conda
   components_repository: "https://github.com/mehul4mak/build-ml-pipeline-for-short-term-rental-prices#components"
   # All the intermediate files will be copied to this directory at the end of the run.
   # Set this to null if you are running in prod

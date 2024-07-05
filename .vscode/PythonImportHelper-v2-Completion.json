@@ -294,6 +294,14 @@
         "documentation": {}
     },
     {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "hydra",
         "kind": 6,
         "isExtraImport": true,
@@ -693,7 +701,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def go(config: DictConfig):\n    # Setup the wandb experiment. All runs will be grouped under this name\n    os.environ[\"WANDB_PROJECT\"] = config[\"main\"][\"project_name\"]\n    os.environ[\"WANDB_RUN_GROUP\"] = config[\"main\"][\"experiment_name\"]\n    # Steps to execute\n    steps_par = config['main']['steps']\n    active_steps = steps_par.split(\",\") if steps_par != \"all\" else _steps\n    # Move to a temporary directory\n    with tempfile.TemporaryDirectory() as tmp_dir:\n        if \"download\" in active_steps:",
+        "peekOfCode": "def go(config: DictConfig):\n    # Setup the wandb experiment. All runs will be grouped under this name\n    os.environ[\"WANDB_PROJECT\"] = config[\"main\"][\"project_name\"]\n    os.environ[\"WANDB_RUN_GROUP\"] = config[\"main\"][\"experiment_name\"]\n    # Steps to execute\n    steps_par = config[\"main\"][\"steps\"]\n    active_steps = steps_par.split(\",\") if steps_par != \"all\" else _steps\n    # Move to a temporary directory\n    with tempfile.TemporaryDirectory() as tmp_dir:\n        if \"download\" in active_steps:",
         "detail": "main",
         "documentation": {}
     },
