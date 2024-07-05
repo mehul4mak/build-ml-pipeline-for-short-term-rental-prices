@@ -1,6 +1,5 @@
 name: test_model
-# conda_env: conda.yml
-python_env: python_env.yml
+conda_env: conda.yml
 
 entry_points:
   main:
