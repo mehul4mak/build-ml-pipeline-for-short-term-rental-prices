@@ -315,7 +315,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def pytest_addoption(parser):\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope='session')\ndef data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this",
+        "peekOfCode": "def pytest_addoption(parser):\n    \"\"\"Pytest Parser\"\"\"\n    parser.addoption(\"--csv\", action=\"store\")\n    parser.addoption(\"--ref\", action=\"store\")\n    parser.addoption(\"--kl_threshold\", action=\"store\")\n    parser.addoption(\"--min_price\", action=\"store\")\n    parser.addoption(\"--max_price\", action=\"store\")\n@pytest.fixture(scope=\"session\")\ndef data(request):\n    \"\"\"Data Fixture\"\"\"",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -324,7 +324,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.csv).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --csv option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
+        "peekOfCode": "def data(request):\n    \"\"\"Data Fixture\"\"\"\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact.\n    # This will also note that this script is using\n    # this particular version of the artifact\n    data_path = run.use_artifact(request.config.option.csv).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --csv option on the command line\")\n    df = pd.read_csv(data_path)",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -333,7 +333,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def ref_data(request):\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.ref).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --ref option on the command line\")\n    df = pd.read_csv(data_path)\n    return df\n@pytest.fixture(scope='session')",
+        "peekOfCode": "def ref_data(request):\n    \"\"\"Reference Data Fixture\"\"\"\n    run = wandb.init(job_type=\"data_tests\", resume=True)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    data_path = run.use_artifact(request.config.option.ref).file()\n    if data_path is None:\n        pytest.fail(\"You must provide the --ref option on the command line\")\n    df = pd.read_csv(data_path)\n    return df",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -342,7 +342,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def kl_threshold(request):\n    kl_threshold = request.config.option.kl_threshold\n    if kl_threshold is None:\n        pytest.fail(\"You must provide a threshold for the KL test\")\n    return float(kl_threshold)\n@pytest.fixture(scope='session')\ndef min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")",
+        "peekOfCode": "def kl_threshold(request):\n    \"\"\"KL Diveragence Fixture\"\"\"\n    kl_threshold = request.config.option.kl_threshold\n    if kl_threshold is None:\n        pytest.fail(\"You must provide a threshold for the KL test\")\n    return float(kl_threshold)\n@pytest.fixture(scope=\"session\")\ndef min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -351,7 +351,7 @@
         "kind": 2,
         "importPath": "components.data_check.conftest",
         "description": "components.data_check.conftest",
-        "peekOfCode": "def min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")\n    return float(min_price)\n@pytest.fixture(scope='session')\ndef max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")",
+        "peekOfCode": "def min_price(request):\n    min_price = request.config.option.min_price\n    if min_price is None:\n        pytest.fail(\"You must provide min_price\")\n    return float(min_price)\n@pytest.fixture(scope=\"session\")\ndef max_price(request):\n    max_price = request.config.option.max_price\n    if max_price is None:\n        pytest.fail(\"You must provide max_price\")",
         "detail": "components.data_check.conftest",
         "documentation": {}
     },
@@ -423,7 +423,7 @@
         "kind": 2,
         "importPath": "components.get_data.run",
         "description": "components.get_data.run",
-        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,\n        os.path.join(\"data\", args.sample),",
+        "peekOfCode": "def go(args):\n    \"\"\"Main entrypoint of the scirpt\"\"\"\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,",
         "detail": "components.get_data.run",
         "documentation": {}
     },
@@ -432,7 +432,7 @@
         "kind": 5,
         "importPath": "components.get_data.run",
         "description": "components.get_data.run",
-        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    log_artifact(\n        args.artifact_name,\n        args.artifact_type,\n        args.artifact_description,",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    \"\"\"Main entrypoint of the scirpt\"\"\"\n    run = wandb.init(job_type=\"download_file\")\n    run.config.update(args)\n    logger.info(f\"Returning sample {args.sample}\")\n    logger.info(f\"Uploading {args.artifact_name} to Weights & Biases\")\n    log_artifact(\n        args.artifact_name,\n        args.artifact_type,",
         "detail": "components.get_data.run",
         "documentation": {}
     },
@@ -441,7 +441,7 @@
         "kind": 2,
         "importPath": "components.test_regression_model.run",
         "description": "components.test_regression_model.run",
-        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"test_model\")\n    run.config.update(args)\n    logger.info(\"Downloading artifacts\")\n    # Download input artifact. This will also log that this script is using this\n    # particular version of the artifact\n    model_local_path = run.use_artifact(args.mlflow_model).download()\n    # Download test dataset\n    test_dataset_path = run.use_artifact(args.test_dataset).file()\n    # Read test dataset",
+        "peekOfCode": "def go(args):\n    \"\"\"Main Function\"\"\"\n    run = wandb.init(job_type=\"test_model\")\n    run.config.update(args)\n    logger.info(\"Downloading artifacts\")\n    # Download input artifact. This will also log that this script is using\n    # this particular version of the artifact\n    model_local_path = run.use_artifact(args.mlflow_model).download()\n    # Download test dataset\n    test_dataset_path = run.use_artifact(args.test_dataset).file()",
         "detail": "components.test_regression_model.run",
         "documentation": {}
     },
@@ -450,7 +450,7 @@
         "kind": 5,
         "importPath": "components.test_regression_model.run",
         "description": "components.test_regression_model.run",
-        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"test_model\")\n    run.config.update(args)\n    logger.info(\"Downloading artifacts\")\n    # Download input artifact. This will also log that this script is using this\n    # particular version of the artifact\n    model_local_path = run.use_artifact(args.mlflow_model).download()\n    # Download test dataset\n    test_dataset_path = run.use_artifact(args.test_dataset).file()",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    \"\"\"Main Function\"\"\"\n    run = wandb.init(job_type=\"test_model\")\n    run.config.update(args)\n    logger.info(\"Downloading artifacts\")\n    # Download input artifact. This will also log that this script is using\n    # this particular version of the artifact\n    model_local_path = run.use_artifact(args.mlflow_model).download()\n    # Download test dataset",
         "detail": "components.test_regression_model.run",
         "documentation": {}
     },
@@ -459,7 +459,7 @@
         "kind": 2,
         "importPath": "components.train_val_test_split.run",
         "description": "components.train_val_test_split.run",
-        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"train_val_test_split\")\n    run.config.update(args)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    logger.info(f\"Fetching artifact {args.input}\")\n    artifact_local_path = run.use_artifact(args.input).file()\n    df = pd.read_csv(artifact_local_path)\n    logger.info(\"Splitting trainval and test\")\n    trainval, test = train_test_split(",
+        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"train_val_test_split\")\n    run.config.update(args)\n    # Download input artifact. This will also note that this script is using\n    # this particular version of the artifact\n    logger.info(f\"Fetching artifact {args.input}\")\n    artifact_local_path = run.use_artifact(args.input).file()\n    df = pd.read_csv(artifact_local_path)\n    logger.info(\"Splitting trainval and test\")\n    trainval, test = train_test_split(",
         "detail": "components.train_val_test_split.run",
         "documentation": {}
     },
@@ -468,7 +468,7 @@
         "kind": 5,
         "importPath": "components.train_val_test_split.run",
         "description": "components.train_val_test_split.run",
-        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"train_val_test_split\")\n    run.config.update(args)\n    # Download input artifact. This will also note that this script is using this\n    # particular version of the artifact\n    logger.info(f\"Fetching artifact {args.input}\")\n    artifact_local_path = run.use_artifact(args.input).file()\n    df = pd.read_csv(artifact_local_path)\n    logger.info(\"Splitting trainval and test\")",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"train_val_test_split\")\n    run.config.update(args)\n    # Download input artifact. This will also note that this script is using\n    # this particular version of the artifact\n    logger.info(f\"Fetching artifact {args.input}\")\n    artifact_local_path = run.use_artifact(args.input).file()\n    df = pd.read_csv(artifact_local_path)\n    logger.info(\"Splitting trainval and test\")",
         "detail": "components.train_val_test_split.run",
         "documentation": {}
     },
@@ -477,7 +477,7 @@
         "kind": 2,
         "importPath": "components.wandb_utils.log_artifact",
         "description": "components.wandb_utils.log_artifact",
-        "peekOfCode": "def log_artifact(artifact_name, artifact_type, artifact_description, filename, wandb_run):\n    \"\"\"\n    Log the provided filename as an artifact in W&B, and add the artifact path to the MLFlow run\n    so it can be retrieved by subsequent steps in a pipeline\n    :param artifact_name: name for the artifact\n    :param artifact_type: type for the artifact (just a string like \"raw_data\", \"clean_data\" and so on)\n    :param artifact_description: a brief description of the artifact\n    :param filename: local filename for the artifact\n    :param wandb_run: current Weights & Biases run\n    :return: None",
+        "peekOfCode": "def log_artifact(\n    artifact_name, artifact_type, artifact_description, filename, wandb_run\n):\n    \"\"\"\n    Log the provided filename as an artifact in W&B, and add the artifact path\n    to the MLFlow run\n    so it can be retrieved by subsequent steps in a pipeline\n    :param artifact_name: name for the artifact\n    :param artifact_type: type for the artifact (just a string like \"raw_data\",\n                         \"clean_data\" and so on)",
         "detail": "components.wandb_utils.log_artifact",
         "documentation": {}
     },
@@ -495,7 +495,7 @@
         "kind": 2,
         "importPath": "src.basic_cleaning.run",
         "description": "src.basic_cleaning.run",
-        "peekOfCode": "def go(args):\n    with wandb.init(job_type=\"basic_cleaning\") as run:\n        logger.info(\"Creating wandb run...\")\n        run.config.update(args)\n        logger.info(\"Downloading raw artifact\")\n        # run = wandb.init(project=\"nyc_airbnb\", group=\"eda\", save_code=True)\n        artifact_local_path = run.use_artifact(args.input_artifact).file()\n        df = pd.read_csv(artifact_local_path)\n        logger.info(\"Creating cleaned artifact\")\n        # Drop outliers",
+        "peekOfCode": "def go(args):\n    \"\"\"Main Function\"\"\"\n    with wandb.init(job_type=\"basic_cleaning\") as run:\n        logger.info(\"Creating wandb run...\")\n        run.config.update(args)\n        logger.info(\"Downloading raw artifact\")\n        # run = wandb.init(project=\"nyc_airbnb\", group=\"eda\", save_code=True)\n        artifact_local_path = run.use_artifact(args.input_artifact).file()\n        df = pd.read_csv(artifact_local_path)\n        logger.info(\"Creating cleaned artifact\")",
         "detail": "src.basic_cleaning.run",
         "documentation": {}
     },
@@ -504,7 +504,7 @@
         "kind": 5,
         "importPath": "src.basic_cleaning.run",
         "description": "src.basic_cleaning.run",
-        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    with wandb.init(job_type=\"basic_cleaning\") as run:\n        logger.info(\"Creating wandb run...\")\n        run.config.update(args)\n        logger.info(\"Downloading raw artifact\")\n        # run = wandb.init(project=\"nyc_airbnb\", group=\"eda\", save_code=True)\n        artifact_local_path = run.use_artifact(args.input_artifact).file()\n        df = pd.read_csv(artifact_local_path)\n        logger.info(\"Creating cleaned artifact\")",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    \"\"\"Main Function\"\"\"\n    with wandb.init(job_type=\"basic_cleaning\") as run:\n        logger.info(\"Creating wandb run...\")\n        run.config.update(args)\n        logger.info(\"Downloading raw artifact\")\n        # run = wandb.init(project=\"nyc_airbnb\", group=\"eda\", save_code=True)\n        artifact_local_path = run.use_artifact(args.input_artifact).file()\n        df = pd.read_csv(artifact_local_path)",
         "detail": "src.basic_cleaning.run",
         "documentation": {}
     },
@@ -513,7 +513,7 @@
         "kind": 2,
         "importPath": "src.train_random_forest.feature_engineering",
         "description": "src.train_random_forest.feature_engineering",
-        "peekOfCode": "def delta_date_feature(dates):\n    \"\"\"\n    Given a 2d array containing dates (in any format recognized by pd.to_datetime), it returns the delta in days\n    between each date and the most recent date in its column\n    \"\"\"\n    date_sanitized = pd.DataFrame(dates).apply(pd.to_datetime)\n    return date_sanitized.apply(\n        lambda d: (\n            d.max() - d).dt.days,\n        axis=0).to_numpy()",
+        "peekOfCode": "def delta_date_feature(dates):\n    \"\"\"\n    Given a 2d array containing dates (in any format recognized\n    by pd.to_datetime), it returns the delta in days\n    between each date and the most recent date in its column\n    \"\"\"\n    date_sanitized = pd.DataFrame(dates).apply(pd.to_datetime)\n    return date_sanitized.apply(\n        lambda d: (d.max() - d).dt.days, axis=0\n    ).to_numpy()",
         "detail": "src.train_random_forest.feature_engineering",
         "documentation": {}
     },
@@ -522,7 +522,7 @@
         "kind": 2,
         "importPath": "src.train_random_forest.run",
         "description": "src.train_random_forest.run",
-        "peekOfCode": "def delta_date_feature(dates):\n    \"\"\"\n    Given a 2d array containing dates (in any format recognized by pd.to_datetime), it returns the delta in days\n    between each date and the most recent date in its column\n    \"\"\"\n    date_sanitized = pd.DataFrame(dates).apply(pd.to_datetime)\n    return date_sanitized.apply(\n        lambda d: (\n            d.max() - d).dt.days,\n        axis=0).to_numpy()",
+        "peekOfCode": "def delta_date_feature(dates):\n    \"\"\"\n    Given a 2d array containing dates (in any format recognized\n    by pd.to_datetime), it returns the delta in days\n    between each date and the most recent date in its column\n    \"\"\"\n    date_sanitized = pd.DataFrame(dates).apply(pd.to_datetime)\n    return date_sanitized.apply(\n        lambda d: (d.max() - d).dt.days, axis=0\n    ).to_numpy()",
         "detail": "src.train_random_forest.run",
         "documentation": {}
     },
@@ -531,7 +531,7 @@
         "kind": 2,
         "importPath": "src.train_random_forest.run",
         "description": "src.train_random_forest.run",
-        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"train_random_forest\")\n    run.config.update(args)\n    # Get the Random Forest configuration and update W&B\n    with open(args.rf_config) as fp:\n        rf_config = json.load(fp)\n    run.config.update(rf_config)\n    # Fix the random seed for the Random Forest, so we get reproducible results\n    rf_config['random_state'] = args.random_seed\n    ######################################",
+        "peekOfCode": "def go(args):\n    run = wandb.init(job_type=\"train_random_forest\")\n    run.config.update(args)\n    # Get the Random Forest configuration and update W&B\n    with open(args.rf_config) as fp:\n        rf_config = json.load(fp)\n    run.config.update(rf_config)\n    # Fix the random seed for the Random Forest, so we get reproducible results\n    rf_config[\"random_state\"] = args.random_seed\n    ######################################",
         "detail": "src.train_random_forest.run",
         "documentation": {}
     },
@@ -540,7 +540,7 @@
         "kind": 2,
         "importPath": "src.train_random_forest.run",
         "description": "src.train_random_forest.run",
-        "peekOfCode": "def plot_feature_importance(pipe, feat_names):\n    # We collect the feature importance for all non-nlp features first\n    feat_imp = pipe[\"random_forest\"].feature_importances_[\n        : len(feat_names) - 1]\n    # For the NLP feature we sum across all the TF-IDF dimensions into a global\n    # NLP importance\n    nlp_importance = sum(\n        pipe[\"random_forest\"].feature_importances_[\n            len(feat_names) - 1:])\n    feat_imp = np.append(feat_imp, nlp_importance)",
+        "peekOfCode": "def plot_feature_importance(pipe, feat_names):\n    # We collect the feature importance for all non-nlp features first\n    feat_imp = pipe[\"random_forest\"].feature_importances_[\n        : len(feat_names) - 1\n    ]\n    # For the NLP feature we sum across all the TF-IDF dimensions into a global\n    # NLP importance\n    nlp_importance = sum(\n        pipe[\"random_forest\"].feature_importances_[len(feat_names) - 1 :]\n    )",
         "detail": "src.train_random_forest.run",
         "documentation": {}
     },
@@ -558,7 +558,7 @@
         "kind": 5,
         "importPath": "src.train_random_forest.run",
         "description": "src.train_random_forest.run",
-        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"train_random_forest\")\n    run.config.update(args)\n    # Get the Random Forest configuration and update W&B\n    with open(args.rf_config) as fp:\n        rf_config = json.load(fp)\n    run.config.update(rf_config)\n    # Fix the random seed for the Random Forest, so we get reproducible results\n    rf_config['random_state'] = args.random_seed",
+        "peekOfCode": "logger = logging.getLogger()\ndef go(args):\n    run = wandb.init(job_type=\"train_random_forest\")\n    run.config.update(args)\n    # Get the Random Forest configuration and update W&B\n    with open(args.rf_config) as fp:\n        rf_config = json.load(fp)\n    run.config.update(rf_config)\n    # Fix the random seed for the Random Forest, so we get reproducible results\n    rf_config[\"random_state\"] = args.random_seed",
         "detail": "src.train_random_forest.run",
         "documentation": {}
     },
