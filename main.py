@@ -33,7 +33,7 @@ def go(config: DictConfig):
     os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
 
     # Steps to execute
-    steps_par = config["main"]["steps"]
+    steps_par: str = config["main"]["steps"]
     active_steps = steps_par.split(",") if steps_par != "all" else _steps
 
     # Move to a temporary directory
@@ -56,9 +56,7 @@ def go(config: DictConfig):
 
         if "basic_cleaning" in active_steps:
             _ = mlflow.run(
-                os.path.join(
-                    hydra.utils.get_original_cwd(), "src", "basic_cleaning"
-                ),
+                os.path.join(hydra.utils.get_original_cwd(), "src", "basic_cleaning"),
                 "main",
                 parameters={
                     "input_artifact": "sample.csv:latest",
@@ -128,9 +126,7 @@ def go(config: DictConfig):
                     "random_seed": config["modeling"]["random_seed"],
                     "stratify_by": config["modeling"]["stratify_by"],
                     "rf_config": rf_config,
-                    "max_tfidf_features": config["modeling"][
-                        "max_tfidf_features"
-                    ],
+                    "max_tfidf_features": config["modeling"]["max_tfidf_features"],
                     "output_artifact": "random_forest_export",
                 },
                 env_manager="conda",
