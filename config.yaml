@@ -6,7 +6,7 @@ main:
   project_name: nyc_airbnb
   experiment_name: development
   steps: all
-  branch_name: dev
+  branch_name: conda
 etl:
   sample: "sample1.csv"
   min_price: 10 # dollars
