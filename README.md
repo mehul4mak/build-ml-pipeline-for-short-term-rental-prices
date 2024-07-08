@@ -587,3 +587,12 @@ you have trained your new model on the new data.
 ## License
 
 [License](LICENSE.txt)
+
+
+ conda info --envs | grep mlflow | cut -f1 -d" "
+
+ for e in $(conda info --envs | grep mlflow | cut -f1 -d" "); do conda uninstall --name $e --all -y;done
+
+  mlflow run https://github.com/[your github username]/nd0821-c2-build-model-workflow-starter.git \
+             -v [the version you want to use, like 1.0.0] \
+             -P hydra_options="etl.sample='sample2.csv'"
